@@ -11,7 +11,7 @@ const server = http.createServer(function(req, res) {
     }
     else {
       res.writeHead(404, {'content-type': 'text/html'});
-      res.write('Not Definded');
+      res.write('<h1>404 Not Found</h1>');
       res.end();
     }
   }
