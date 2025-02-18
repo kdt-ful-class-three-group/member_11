@@ -5,7 +5,7 @@ const server = http.createServer(function(req, res) {
   if(req.method === 'GET') {
     if(req.url === '/') {
       res.writeHead(200, {'content-type': 'text/html'});
-      res.write(fs.readFileSync('/index.html'));
+      res.write(fs.readFileSync('./index.html'));
       res.end();
     }
   }
