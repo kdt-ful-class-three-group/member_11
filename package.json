@@ -1,0 +1,19 @@
+{
+  "name": "member_11",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kdt-ful-class-three-group/member_11.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kdt-ful-class-three-group/member_11/issues"
+  },
+  "homepage": "https://github.com/kdt-ful-class-three-group/member_11#readme",
+  "description": ""
+}
