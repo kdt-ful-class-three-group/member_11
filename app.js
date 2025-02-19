@@ -1,5 +1,6 @@
 const http = require('http');
 const fs = require('fs');
+const createHtml = require('./createHtml');
 
 const server = http.createServer(function(req, res) {
   console.log(req.url)
@@ -13,6 +14,32 @@ const server = http.createServer(function(req, res) {
       res.writeHead(200, {'content-type': 'text/css; charset=utf-8'});
       res.write(fs.readFileSync('style.css'));
       res.end();
+    }
+    if(req.url === '/add') {
+      res.writeHead(200, {'content-type': 'text/html; charset=utf-8'});
+      res.write(createHtml(
+        `
+        <form action="/data" method="post">
+        <input type="text" name:name placeholder="name">
+        <input type="text" name:age placeholder="age">
+        <input type="text" name:hobby placeholder="hobby">
+        <button type="submit">추가<button>
+        </form>
+        `
+      ));
+      res.end();
+    }
+    if(req.url.endsWith('.js')) {
+      res.writeHead(200, {'content-type': 'text/javascript; charset=utf-8'});
+      res.write(fs.readFileSync(`.${req.url}`));
+      res.end();
+    }
+  }
+  if(req.method === 'POST') {
+    if(req.url === '/data') {
+      req.on('data', function(data) {
+        
+      })
     }
   }
 });
