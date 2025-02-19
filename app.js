@@ -28,7 +28,10 @@ const server = http.createServer(function(req, res) {
 
       });
       req.on('end', function(){
-
+        const data = fs.readFileSync('data.json');
+        res.writeHead(200, {'content-type': 'text/html; charset=utf-8'});
+        res.write(`<h1>${JSON.parse(data).split('=')[1]}</h1>`)
+        res.end();
       })
     }
   }
