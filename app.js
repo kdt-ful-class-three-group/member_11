@@ -18,6 +18,13 @@ const server = http.createServer(function(req, res) {
     if(req.url === '/data') {
       req.on('data', function(data) {
         console.log(data.toString());
+        const dataString = data.toString();
+
+        fs.writeFileSync('data.json', JSON.stringify(dataString), 'utf8', function(err) {
+          if (err) {
+            console.log(err) 
+          }
+        });
 
       });
       req.on('end', function(){
