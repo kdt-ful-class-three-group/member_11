@@ -1,11 +1,10 @@
 const http = require('http');
 const fs = require('fs');
-const qs = require('querystring');
 const server = http.createServer(function(req, res) {
   console.log(req.url);
   if(req.method === 'GET') {
     if(req.url === '/') {
-      res.writeHead(200, {'content-type': 'text/html'});
+      res.writeHead(200, {'content-type': 'text/html; charset=utf-8'});
       res.write(fs.readFileSync('./index.html'));
       res.end();
     }
@@ -18,28 +17,26 @@ const server = http.createServer(function(req, res) {
   if(req.method === 'POST') {
     if(req.url === '/data') {
       req.on('data', function(data) {
-        // on = addEventListener 같은것.
         console.log(data.toString());
         const dataString = data.toString();
-        // func.getData(data);
-        fs.writeFileSync('data.txt', dataString);
+
+        fs.writeFileSync('data.json', JSON.stringify(dataString), 'utf8', function(err) {
+          if (err) {
+            console.log(err) 
+          }
+        });
+
       });
       req.on('end', function(){
-        // on('end', ) = 이벤트를 끝낸다는 뜻.
-        console.log("응답 잘 받음");
-        const data = fs.readFileSync('data.txt');
-        const dataQs = qs.parse(data.toString());
-        console.log(dataQs);
-        // console.log(qs.parse(data));
-        res.statusCode = 200;
-        res.setHeader('Content-Type', 'text/html');
-        // res.write(`<h1>${data.split('=')[1]}</h1>`);
-        res.write(`<h1>${Object.values(dataQs)}</h1>`);
+        const data = fs.readFileSync('data.json');
+        res.writeHead(200, {'content-type': 'text/html; charset=utf-8'});
+        res.write(`<h1>${JSON.parse(data).split('=')[1]}</h1>`)
         res.end();
-      });
+      })
     }
   }
 });
+
 function start(port) {
   server.listen(port, function() {
     console.log(`서버가 http://localhost:${port} 에서 실행중입니다.`);
