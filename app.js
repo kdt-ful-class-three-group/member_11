@@ -1,6 +1,7 @@
 const http = require('http');
 const fs = require('fs');
 const createHtml = require('./createHtml');
+const qs = require('querystring');
 
 const server = http.createServer(function(req, res) {
   console.log(req.url)
@@ -20,10 +21,10 @@ const server = http.createServer(function(req, res) {
       res.write(createHtml(
         `
         <form action="/data" method="post">
-        <input type="text" name:name placeholder="name">
-        <input type="text" name:age placeholder="age">
-        <input type="text" name:hobby placeholder="hobby">
-        <button type="submit">추가<button>
+        <input type="text" name="name" placeholder="name">
+        <input type="text" name="age" placeholder="age">
+        <input type="text" name="hobby" placeholder="hobby">
+        <button type="submit">추가</button>
         </form>
         `
       ));
@@ -38,8 +39,13 @@ const server = http.createServer(function(req, res) {
   if(req.method === 'POST') {
     if(req.url === '/data') {
       req.on('data', function(data) {
-        
-      })
+        console.log(data.toString());
+        const dataString = data.toString();
+        const parseData = qs.parse(dataString);
+        console.log(parseData);
+      });
+      req.on('end', function() {
+      });
     }
   }
 });
